@@ -1,5 +1,11 @@
 import { Locator, Page } from '@playwright/test';
 
+interface DadosCadastro {
+  nomeCompleto: string;
+  email: string;
+  senha: string;
+  uf: string;
+}
 export default class Entrar {
   readonly page: Page;
   readonly baseUrl: string;
@@ -43,7 +49,17 @@ export default class Entrar {
 
   async navigate(): Promise<void> {
     await this.page.goto(this.baseUrl);
-    //await this.page.waitForLoadState('networkidle');
-    //await this.appOnBoardingDelivery.waitFor({ state: 'visible' });
+  }
+
+  async preencherCadastro({nomeCompleto, email, senha, uf}: DadosCadastro): Promise<void> {
+    await this.inputNomeCompleto.fill(nomeCompleto);
+    await this.inputEmail.fill(email);
+    await this.inputSenha.fill(senha);
+    await this.inputConfirmarSenha.fill(senha);
+    await this.selectUF.click({timeout: 5000});
+    await this.page.getByRole('button', { name: uf }).click( {timeout: 5000} );
+    await this.checkTermos.click();
+    await this.btnAceitarTermos.click();
+    await this.btnModalCadastrar.click();
   }
 }
