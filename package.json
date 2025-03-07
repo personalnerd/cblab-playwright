@@ -1,0 +1,20 @@
+{
+  "name": "cblab-playwright",
+  "version": "1.0.0",
+  "description": "automatização de cenário de teste para desafio QA no CBLab",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test-headed": "npx playwright test --headed",
+    "test-ui": "npx playwright test --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@faker-js/faker": "^9.6.0",
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.13.9"
+  }
+}
