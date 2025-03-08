@@ -5,6 +5,7 @@ interface DadosCadastro {
   email: string;
   senha: string;
   uf: string;
+  termos: boolean
 }
 export default class Entrar {
   readonly page: Page;
@@ -21,6 +22,7 @@ export default class Entrar {
   readonly btnAceitarTermos: Locator;
   readonly btnModalCadastrar: Locator;
   readonly btnFechar: Locator;
+  readonly btnCancelarUf: Locator;
 
   // código de confirmação
   readonly inputCodigo: Locator;
@@ -41,6 +43,7 @@ export default class Entrar {
     this.btnAceitarTermos = this.page.getByRole('button', { name: 'ACEITAR' });
     this.btnModalCadastrar = this.page.getByRole('button', { name: 'CADASTRAR' });
     this.btnFechar = this.page.getByRole('button', { name: 'FECHAR' });
+    this.btnCancelarUf = this.page.getByRole('button', { name: 'Cancel' });
 
     // código de confirmação
     this.inputCodigo = this.page.locator('input.otp-input:first-child');
@@ -51,15 +54,18 @@ export default class Entrar {
     await this.page.goto(this.baseUrl);
   }
 
-  async preencherCadastro({nomeCompleto, email, senha, uf}: DadosCadastro): Promise<void> {
+  async preencherCadastro({nomeCompleto, email, senha, uf, termos}: DadosCadastro): Promise<void> {
     await this.inputNomeCompleto.fill(nomeCompleto);
     await this.inputEmail.fill(email);
     await this.inputSenha.fill(senha);
     await this.inputConfirmarSenha.fill(senha);
     await this.selectUF.click({timeout: 5000});
-    await this.page.getByRole('button', { name: uf }).click( {timeout: 5000} );
-    await this.checkTermos.click();
-    await this.btnAceitarTermos.click();
-    await this.btnModalCadastrar.click();
+    uf
+      ? await this.page.getByRole('button', { name: uf }).click( {timeout: 5000} )
+      : await this.btnCancelarUf.click();
+    if (termos) {
+      await this.checkTermos.click();
+      await this.btnAceitarTermos.click();
+    }
   }
 }

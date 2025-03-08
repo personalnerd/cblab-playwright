@@ -6,7 +6,9 @@
   "scripts": {
     "test": "npx playwright test",
     "test-headed": "npx playwright test --headed",
-    "test-ui": "npx playwright test --ui"
+    "test-ui": "npx playwright test --ui",
+    "test-debug": "npx playwright test --debug",
+    "show-report": "npx playwright show-report"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +18,8 @@
     "@faker-js/faker": "^9.6.0",
     "@playwright/test": "^1.51.0",
     "@types/node": "^22.13.9"
+  },
+  "dependencies": {
+    "cblab-playwright": "file:"
   }
 }
